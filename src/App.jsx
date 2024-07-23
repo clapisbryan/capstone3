@@ -6,6 +6,8 @@ import Home from './pages/Home/Home';
 import NoMatch from './pages/NoMatch/NoMatch';
 import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
+import AdminDashboard from './pages/AdminDashboard/AdminDashboard';
+import Logout from './pages/Logout/Logout';
 
 const App = () => {
 
@@ -55,6 +57,8 @@ const App = () => {
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="/logout" element={<Logout />}/>
               <Route path="*" element={<NoMatch />} />
             </Routes>
         </Router>
