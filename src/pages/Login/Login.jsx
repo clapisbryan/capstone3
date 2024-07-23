@@ -63,7 +63,7 @@ const Login = () => {
 	}
 
 	function retrieveUserDetails(token) {
-		fetch('http://localhost:4000/users/details', {
+		fetch('http://localhost:4006/b6/users/details', {
 			headers: {
 				Authorization: `Bearer ${token}`
 			}

@@ -4,7 +4,7 @@ import UserContext from '../../hooks/UserContext';
 import { Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-export default function Tasks() {
+export default function Products() {
 
     const { user } = useContext(UserContext); 
     const [products, setProducts] = useState([]);
@@ -39,7 +39,7 @@ export default function Tasks() {
                 products.length > 0
                 ?
                 <>  
-                    <h1 className='text-center mt-5'>Products</h1>
+                    <h1 className='text-center mt-5'>Our Products</h1>
                     <Row>
                     {   
                         products.map(product => { 
@@ -54,7 +54,7 @@ export default function Tasks() {
                 </>
                 :
                 <>
-                    <h1>No Tasks</h1>
+                    <h1>No Products</h1>
                 </>
                 :
                 <>
@@ -63,15 +63,5 @@ export default function Tasks() {
             </>
             }
         </>
-        )}
-
-
-
-
-
-
-
-
-
-
-
+        )
+}

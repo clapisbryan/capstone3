@@ -1,12 +1,13 @@
 import { useState, useEffect, useContext } from 'react';
 import { Form, Button, Row, Col, Card, CardBody } from 'react-bootstrap';
-import { Navigate } from 'react-router-dom';
-
+import { Navigate, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import UserContext from '../../hooks/UserContext';
 
 export default function Register() {
 
     const {user} = useContext(UserContext);
+    const navigate = useNavigate();
 
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -67,15 +68,36 @@ export default function Register() {
                 setPassword("");
                 setConfirmPassword("");
 
-                alert("Registration successful");
+                Swal.fire({
+                        title: "Registration successful",
+                        icon: "success",
+                        text: "You are now registered."
+                    })
+                navigate("/login");
             }else if(data.message === "Email Invalid"){
-                alert("Email is invalid");
+                Swal.fire({
+                        title: "Email is invalid",
+                        icon: "error",
+                        text: "Please enter a valid email"
+                    })
             }else if(data.message === "Mobile number invalid"){
-                alert("Mobile number is invalid");
+                Swal.fire({
+                        title: "Mobile number is invalid",
+                        icon: "error",
+                        text: "Mobile Number must be 11 digits"
+                    })
             }else if(data.message === "Password must be atleast 8 characters"){
-                alert("Password must be at least 8 characters");
+                Swal.fire({
+                        title: "Password is invalid",
+                        icon: "error",
+                        text: "Password must be at least 8 characters"
+                    })
             }else{
-                alert("Something went wrong");
+                Swal.fire({
+                        title: "Something went wrong",
+                        icon: "error",
+                        text: "Please Contact the administrator"
+                    })
             }
         })
     }

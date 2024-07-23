@@ -17,6 +17,10 @@ export default function ProductView(){
 	const [price, setPrice] = useState(0);
 	const [description, setDescription] = useState("");
 
+	// function addToCart(){
+
+	// }
+
 	useEffect(() => {
 		console.log(productId);
 
@@ -24,13 +28,17 @@ export default function ProductView(){
 		.then(res => res.json())
 		.then(data => {
 			console.log(data);
-
-			setName(data.name);
-			setPrice(data.price);
-			setDescription(data.description);
+			// const { name, price, description } = data;
+			setName(data.product.name);
+			setPrice(data.product.price);
+			setDescription(data.product.description);
+			console.log(name);
+			console.log(price);
+			console.log(description);
 		})
 
 	}, [productId]);
+
 
 	return(
 		<>
@@ -40,11 +48,10 @@ export default function ProductView(){
                     <Card>
                         <Card.Body className="text-center">
                             <Card.Title>{name}</Card.Title>
-                            <Card.Subtitle>Description:</Card.Subtitle>
                             <Card.Text>{description}</Card.Text>
-                            <Card.Subtitle>Price:</Card.Subtitle>
-                            <Card.Text>PhP {price}</Card.Text>
-                            <Button variant="primary" block="true" onClick={}>Add To Cart</Button>
+                            <Card.Subtitle>₱{price}</Card.Subtitle>                           
+                            {/*<Button variant="primary" block="true" onClick={() =>addToCart}>Add To Cart</Button>*/}
+                            <Button variant="primary" block="true">Add To Cart</Button>
                         </Card.Body>        
                     </Card>
                 </Col>
