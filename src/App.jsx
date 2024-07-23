@@ -4,6 +4,7 @@ import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { UserProvider } from './hooks/UserContext';
 import Home from './pages/Home/Home';
 import NoMatch from './pages/NoMatch/NoMatch';
+import Register from './pages/Register/Register';
 
 const App = () => {
 
@@ -53,6 +54,7 @@ const App = () => {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="*" element={<NoMatch />} />
+              <Route path="/register" element={<Register />} />
             </Routes>
           </Container>
         </Router>
