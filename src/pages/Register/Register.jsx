@@ -40,7 +40,7 @@ export default function Register() {
         // Prevents the page redirection via form submission
         e.preventDefault();
 
-        fetch("http://localhost:4000/users/register", {
+        fetch("http://ec2-13-59-17-101.us-east-2.compute.amazonaws.com/b6/users/register", {
 
             method: 'POST',
             headers: {

@@ -53,8 +53,8 @@ const App = () => {
           <Container>
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="*" element={<NoMatch />} />
               <Route path="/register" element={<Register />} />
+              <Route path="*" element={<NoMatch />} />
             </Routes>
           </Container>
         </Router>
