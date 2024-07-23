@@ -4,6 +4,7 @@ import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { UserProvider } from './hooks/UserContext';
 import Home from './pages/Home/Home';
 import NoMatch from './pages/NoMatch/NoMatch';
+import Login from './pages/Login/Login';
 
 const App = () => {
 
@@ -49,12 +50,11 @@ const App = () => {
     <>
       <UserProvider value={{ user, setUser, unsetUser }}>
         <Router>
-          <Container>
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
               <Route path="*" element={<NoMatch />} />
             </Routes>
-          </Container>
         </Router>
       </UserProvider>
     </>
