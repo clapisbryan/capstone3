@@ -82,7 +82,7 @@ export default function Register() {
 
     return (
         (user.id !== null && user.id !== undefined) ?
-            <Navigate to="/courses" />
+            <Navigate to="/login" />
             :
         <Form onSubmit={(e) => registerUser(e)}>
         <h1 className="my-5 text-center">Register</h1>
