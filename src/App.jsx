@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Container } from 'react-bootstrap';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { UserProvider } from './hooks/UserContext';
-import Home from './pages/Home/Home';
-import NoMatch from './pages/NoMatch/NoMatch';
-import Login from './pages/Login/Login';
-import Register from './pages/Register/Register';
-import Products from './pages/Products/Products';
-import ProductView from './pages/Products/ProductView'
 import AdminDashboard from './pages/AdminDashboard/AdminDashboard';
+import Cart from './pages/Cart/Cart';
+import Home from './pages/Home/Home';
+import Login from './pages/Login/Login';
 import Logout from './pages/Logout/Logout';
+import NoMatch from './pages/NoMatch/NoMatch';
+import Products from './pages/Products/Products';
+import ProductView from './pages/Products/ProductView';
+import Register from './pages/Register/Register';
 
 const App = () => {
 
@@ -55,18 +55,17 @@ const App = () => {
     <>
       <UserProvider value={{ user, setUser, unsetUser }}>
         <Router>
-          <Container>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/products" element={<Products />} />
               <Route path="/products/:productId" element={<ProductView />} />
+              <Route path="/cart-view" element={<Cart />} />
               <Route path="/admin" element={<AdminDashboard />} />
               <Route path="/logout" element={<Logout />}/>
               <Route path="*" element={<NoMatch />} />
             </Routes>
-          </Container>
         </Router>
       </UserProvider>
     </>

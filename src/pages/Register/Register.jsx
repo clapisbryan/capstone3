@@ -3,6 +3,7 @@ import { Form, Button, Row, Col, Card, CardBody } from 'react-bootstrap';
 import { Navigate, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import UserContext from '../../hooks/UserContext';
+import Body from '../../components/Body/Body';
 
 export default function Register() {
 
@@ -107,75 +108,76 @@ export default function Register() {
 			<Navigate to="/login" />
 			:
 			<>
-				<Form onSubmit={(e) => registerUser(e)}>
-					<h1 className="my-3 text-center">Register</h1>
-					<Form.Group>
-						<Form.Label>First Name:</Form.Label>
-						<Form.Control
-							type="text"
-							placeholder="Enter First Name"
-							required
-							value={firstName}
-							onChange={e => { setFirstName(e.target.value) }}
-						/>
-					</Form.Group>
-					<Form.Group>
-						<Form.Label>Last Name:</Form.Label>
-						<Form.Control
-							type="text"
-							placeholder="Enter Last Name"
-							required
-							value={lastName}
-							onChange={e => { setLastName(e.target.value) }}
-						/>
-					</Form.Group>
-					<Form.Group>
-						<Form.Label>Email:</Form.Label>
-						<Form.Control
-							type="email"
-							placeholder="Enter Email"
-							required
-							value={email}
-							onChange={e => { setEmail(e.target.value) }}
-						/>
-					</Form.Group>
-					<Form.Group>
-						<Form.Label>Mobile No:</Form.Label>
-						<Form.Control
-							type="number"
-							placeholder="Enter 11 Digit No."
-							required
-							value={mobileNo}
-							onChange={e => { setMobileNo(e.target.value) }}
-						/>
-					</Form.Group>
-					<Form.Group>
-						<Form.Label>Password:</Form.Label>
-						<Form.Control
-							type="password"
-							placeholder="Enter Password"
-							required
-							value={password}
-							onChange={e => { setPassword(e.target.value) }}
-						/>
-					</Form.Group>
-					<Form.Group className="mb-3">
-						<Form.Label>Confirm Password:</Form.Label>
-						<Form.Control
-							type="password"
-							placeholder="Confirm Password"
-							required
-							value={confirmPassword}
-							onChange={e => { setConfirmPassword(e.target.value) }}
-						/>
-					</Form.Group>
-					{/*conditionally render submit button based on isActive state*/}
-					{isActive ?
-						<Button variant="primary" type="submit" id="submitBtn">Submit</Button>
-						:
-						<Button variant="danger" type="submit" id="submitBtn" disabled>Submit</Button>
-					}
-				</Form>
+				<Body title={"Register"}>
+					<Form onSubmit={(e) => registerUser(e)}>
+						<Form.Group>
+							<Form.Label>First Name:</Form.Label>
+							<Form.Control
+								type="text"
+								placeholder="Enter First Name"
+								required
+								value={firstName}
+								onChange={e => { setFirstName(e.target.value) }}
+							/>
+						</Form.Group>
+						<Form.Group>
+							<Form.Label>Last Name:</Form.Label>
+							<Form.Control
+								type="text"
+								placeholder="Enter Last Name"
+								required
+								value={lastName}
+								onChange={e => { setLastName(e.target.value) }}
+							/>
+						</Form.Group>
+						<Form.Group>
+							<Form.Label>Email:</Form.Label>
+							<Form.Control
+								type="email"
+								placeholder="Enter Email"
+								required
+								value={email}
+								onChange={e => { setEmail(e.target.value) }}
+							/>
+						</Form.Group>
+						<Form.Group>
+							<Form.Label>Mobile No:</Form.Label>
+							<Form.Control
+								type="number"
+								placeholder="Enter 11 Digit No."
+								required
+								value={mobileNo}
+								onChange={e => { setMobileNo(e.target.value) }}
+							/>
+						</Form.Group>
+						<Form.Group>
+							<Form.Label>Password:</Form.Label>
+							<Form.Control
+								type="password"
+								placeholder="Enter Password"
+								required
+								value={password}
+								onChange={e => { setPassword(e.target.value) }}
+							/>
+						</Form.Group>
+						<Form.Group className="mb-3">
+							<Form.Label>Confirm Password:</Form.Label>
+							<Form.Control
+								type="password"
+								placeholder="Confirm Password"
+								required
+								value={confirmPassword}
+								onChange={e => { setConfirmPassword(e.target.value) }}
+							/>
+						</Form.Group>
+						{/*conditionally render submit button based on isActive state*/}
+						{isActive ?
+							<Button variant="primary" type="submit" id="submitBtn">Submit</Button>
+							:
+							<Button variant="danger" type="submit" id="submitBtn" disabled>Submit</Button>
+						}
+					</Form>
+				</Body>
 			</>
 
 	)
