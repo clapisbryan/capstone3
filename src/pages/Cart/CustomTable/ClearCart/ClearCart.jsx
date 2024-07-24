@@ -1,15 +1,13 @@
 import React, { useState } from 'react'
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
-import Swal from 'sweetalert2';
+import { Button, Modal } from 'react-bootstrap'
+import Swal from 'sweetalert2'
 
-const RemoveProduct = ({ productId, fetchData }) => {
+const ClearCart = ({ fetchData }) => {
 	const [modalShow, setModalShow] = useState(false);
 
 	const handleOnProceed = () => {
-		console.log("productId", productId);
-		fetch(`http://localhost:4006/b6/cart/${productId}/remove-from-cart`, {
-			method: "PATCH",
+		fetch(`http://localhost:4006/b6/cart/clear-cart`, {
+			method: "PUT",
 			headers: {
 				'Content-Type': 'application/json',
 				Authorization: `Bearer ${localStorage.getItem('token')}`
@@ -21,7 +19,7 @@ const RemoveProduct = ({ productId, fetchData }) => {
 					Swal.fire({
 						title: "Success",
 						icon: 'success',
-						text: 'Product successfully remove from cart'
+						text: 'Cart successfully cleared'
 					})
 					setModalShow(false)
 					fetchData()
@@ -37,9 +35,7 @@ const RemoveProduct = ({ productId, fetchData }) => {
 	}
 	return (
 		<>
-			<Button variant="danger" onClick={() => setModalShow(true)}>
-				Remove
-			</Button>
+			<Button variant='secondary' onClick={() => setModalShow(true)}>Clear Cart</Button >
 
 			<Modal
 				show={modalShow}
@@ -50,11 +46,11 @@ const RemoveProduct = ({ productId, fetchData }) => {
 			>
 				<Modal.Header closeButton>
 					<Modal.Title id="contained-modal-title-vcenter">
-						Remove Product
+						Clear Cart
 					</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
-					<p>Are you sure you want to delete this product?</p>
+					<p>Are you sure you want to clear cart?</p>
 				</Modal.Body>
 				<Modal.Footer>
 					<Button variant="secondary" onClick={() => setModalShow(false)}>Close</Button>
@@ -65,4 +61,4 @@ const RemoveProduct = ({ productId, fetchData }) => {
 	)
 }
 
-export default RemoveProduct
+export default ClearCart

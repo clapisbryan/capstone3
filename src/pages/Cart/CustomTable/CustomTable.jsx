@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, Table } from 'react-bootstrap';
 import RemoveProduct from './RemoveProduct/RemoveProduct';
 import ProceedToCheckout from './ProceedToCheckout/ProceedToCheckout';
+import ClearCart from './ClearCart/ClearCart';
 
 const CustomTable = ({ cart, fetchData }) => {
 	const [productDetails, setProductDetails] = useState({});
@@ -96,18 +97,19 @@ const CustomTable = ({ cart, fetchData }) => {
 									/>
 								</td>
 								<td>{productDetails[item.productId] ? productDetails[item.productId].price : 'Loading...'}</td>
-								<td>
+								<td className='text-end'>
 									<RemoveProduct productId={item.productId} fetchData={fetchData} />
 								</td>
 							</tr>
 						))
 					)}
 					{cart.cartItems.length !== 0 &&
-						< tr >
+						<tr>
 							<td colSpan={3} className="text-end fw-bold">
 								Total Price:
 							</td>
 							<td>{totalPrice === 0 ? `${cart.totalPrice}` : totalPrice}</td>
+							<td className='text-end'><ClearCart fetchData={fetchData} /></td>
 						</tr>
 					}
 				</tbody>
