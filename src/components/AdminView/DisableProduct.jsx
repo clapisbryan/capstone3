@@ -1,87 +1,54 @@
+import React from 'react';
 import { Button } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 
-export default function ArchiveCourse({product, isActive, fetchData}) {
+const DisableProduct = ({ item, isActive, fetchData }) => {
+    const handleToggle = () => {
+        const action = isActive ? 'archive' : 'activate';
 
-    const archiveToggle = (productId) => {
-        fetch(`http://localhost:4006/b6/products/${productId}/archive`, {
+        fetch(`http://localhost:4006/b6/products/${item._id}/${action}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
         })
-
         .then(res => res.json())
         .then(data => {
-            console.log(data)
-            if(data.message === "Product archived successfully") {
+            if (data.message === `Product ${action}d successfully`) {
                 Swal.fire({
                     title: 'Success',
                     icon: 'success',
-                    text: 'Product successfully disabled'
-                })
-                fetchData();
-
-            }else {
+                    text: `Product ${action}d successfully`
+                });
+                fetchData(); // Refresh the product list
+            } else {
                 Swal.fire({
-                    title: 'Something Went Wrong',
+                    title: 'Error',
                     icon: 'error',
-                    text: 'Please Try again'
-                })
-                fetchData();
-            }
-
-
-        })
-    }
-
-
-    const activateToggle = (productId) => {
-        fetch(`http://localhost:4006/b6/products/${productId}/activate`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${localStorage.getItem('token')}`
+                    text: `Failed to ${action} product`
+                });
             }
         })
+        .catch(error => {
+            Swal.fire({
+                title: 'Error',
+                icon: 'error',
+                text: 'Network error. Please try again later.'
+            });
+            console.error('Error:', error);
+        });
+    };
 
-        .then(res => res.json())
-        .then(data => {
-            console.log(data)
-            if(data.message === "Product activated successfully") {
-                Swal.fire({
-                    title: 'Success',
-                    icon: 'success',
-                    text: 'Course successfully enabled'
-                })
-                fetchData();
-            }else {
-                Swal.fire({
-                    title: 'Something Went Wrong',
-                    icon: 'Error',
-                    text: 'Please Try again'
-                })
-                fetchData();
-            }
+    return (
+        <Button 
+            variant={isActive ? 'danger' : 'success'} 
+            size="sm" 
+            onClick={handleToggle}
+        >
+            {isActive ? 'Disable' : 'Enable'}
+        </Button>
+    );
+};
 
-
-        })
-    }
- 
-
-    return(
-        <>
-            {isActive ?
-
-                <Button variant="danger" size="sm" onClick={() => archiveToggle(product)}>Archive</Button>
-
-                :
-
-                <Button variant="success" size="sm" onClick={() => activateToggle(product)}>Activate</Button>
-
-            }
-        </>
-
-    )
-}
+export default DisableProduct;

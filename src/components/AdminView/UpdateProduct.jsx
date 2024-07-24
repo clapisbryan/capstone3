@@ -1,128 +1,103 @@
-import {useState} from 'react';
-import {Button, Modal, Form} from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Button, Modal, Form } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 
-export default function UpdateProduct({product, fetchData}){
+const UpdateProduct = ({ item, fetchData }) => {
+    const [showEdit, setShowEdit] = useState(false);
+    const [name, setName] = useState(item.name);
+    const [description, setDescription] = useState(item.description);
+    const [price, setPrice] = useState(item.price);
+    const [loading, setLoading] = useState(false);
 
-	const [productId, setProductId] = useState('');
+    const openEdit = () => {
+        setShowEdit(true);
+    };
 
-	// Forms State
-	const [name, setName] = useState('');
-	const [description, setDescription] = useState('');
-	const [price, setPrice] = useState(0);
+    const closeEdit = () => {
+        setShowEdit(false);
+    };
 
-	// state for editCourse modals to open/close
-	const [showEdit, setShowEdit] = useState(false);
+    const handleUpdate = (e) => {
+        e.preventDefault();
+        setLoading(true);
 
-	// function for opening the modal
-	const openEdit = (productId) => {
-		// to still get the actual data from the form
-		fetch(`http://localhost:4006/b6/products/${productId}`)
-		.then(res => res.json())
-		.then(data => {
-			// populate all the input values with the course info that we fetched
-			// console.log(data);
-			setProductId(data.id);
-			setName(data.name);
-			setDescription(data.description);
-			setPrice(data.price)
-		})
-		// Then, open the modal
-		setShowEdit(true);
-	}
+        fetch(`http://localhost:4006/b6/products/${item._id}/update`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify({ name, description, price })
+        })
+        .then(res => res.json())
+        .then(data => {
+            setLoading(false);
+            console.log("data", data)
+            if (data.message === 'Product updated successfully') {
+                Swal.fire('Success!', 'Product updated successfully', 'success');
+                fetchData(); // Refresh the product list
+                closeEdit(); // Close the modal
+            } else {
+                Swal.fire('Error!', 'Failed to update product', 'error');
+            }
+        })
+        .catch(error => {
+        	console.log("error",error)
+            setLoading(false);
+            Swal.fire('Error!', 'Network error. Please try again later.', 'error');
+            console.error('Error:', error);
+        });
+    };
 
-	// function for closing the modal
-	const closeEdit = () => {
-		setShowEdit(false);
-		setName('');
-		setDescription('');
-		setPrice(0);
-	}
-
-	// function to update/edit the course
-	const editCourse = (e, productId) => {
-		e.preventDefault();
-		fetch(`http://localhost:4006/b6/products/${productId}/update`, {
-			method: "PATCH",
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem("token")}`
-			},
-			body: JSON.stringify({
-				name: name,
-				description: description,
-				price: price
-			})
-		})
-		.then(res => res.json())
-		.then(data => {
-			console.log(data);
-			if(data.message === "Product updated successfully"){
-
-				Swal.fire({
-					title: 'Success!',
-					icon: 'success',
-					text: 'Product Successfully updated'
-				})
-				closeEdit();
-				fetchData();
-			}else{
-
-				Swal.fire({
-					title: 'Error!',
-					icon: 'error',
-					text: 'Please try again'
-				})
-				closeEdit();
-				fetchData();
-			} 
-		})
-	}
-
-	return(
-		<>
-			<Button variant="primary" size="sm" onClick={() => openEdit(product)}>Update</Button>
+    return (
+        <>
+            <Button variant="primary" size="sm" onClick={openEdit}>Update</Button>
 
             <Modal show={showEdit} onHide={closeEdit}>
-                <Form onSubmit={e => editProduct(e, productId)}>
+                <Form onSubmit={handleUpdate}>
                     <Modal.Header closeButton>
                         <Modal.Title>Edit Product</Modal.Title>
                     </Modal.Header>
-                    <Modal.Body>    
-                        <Form.Group controlId="courseName">
+                    <Modal.Body>
+                        <Form.Group controlId="productName">
                             <Form.Label>Name</Form.Label>
                             <Form.Control 
-                            	type="text" 
-                            	required
-                            	value={name}
-                            	onChange={e => setName(e.target.value)}
+                                type="text"
+                                required
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
                             />
                         </Form.Group>
-                        <Form.Group controlId="courseDescription">
+                        <Form.Group controlId="productDescription">
                             <Form.Label>Description</Form.Label>
                             <Form.Control 
-                            	type="text" 
-                            	required
-                            	value={description}
-                            	onChange={e => setDescription(e.target.value)}
+                                type="text"
+                                required
+                                value={description}
+                                onChange={(e) => setDescription(e.target.value)}
                             />
                         </Form.Group>
-                        <Form.Group controlId="coursePrice">
+                        <Form.Group controlId="productPrice">
                             <Form.Label>Price</Form.Label>
                             <Form.Control 
-	                            type="number" 
-	                            required
-	                            value={price}
-                            	onChange={e => setPrice(e.target.value)}
+                                type="number"
+                                step="0.01"
+                                required
+                                value={price}
+                                onChange={(e) => setPrice(e.target.value)}
                             />
                         </Form.Group>
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={closeEdit}>Close</Button>
-                        <Button variant="success" type="submit">Submit</Button>
+                        <Button variant="success" type="submit" disabled={loading}>
+                            {loading ? 'Updating...' : 'Update'}
+                        </Button>
                     </Modal.Footer>
                 </Form>
             </Modal>
-		</>
-	)
-}
+        </>
+    );
+};
+
+export default UpdateProduct;

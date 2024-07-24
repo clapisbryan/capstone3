@@ -30,21 +30,26 @@ const CustomTable = ({ items, fetchData }) => {
 		</thead>
 		<tbody>
 		{items.map((item) => {
+			console.log("item:", item);
+			console.log("itemID:", item._id);
+			console.log("itemNAME:", item.name);
+
 			return (
-				<tr key={item.id}>
+
+				<tr key={item._id}>
 				<td>{item.name}</td>
 				<td>{item.description}</td>
 				<td>{item.price}</td>
 				<td className={item.isActive ? "text-success" : "text-danger"}>
 					{item.isActive ? "Available" : "Unavailable"}
 				</td>
-			
-			{/* Action button here*/}
-			<td className="text-center">
-			<UpdateProduct item={item._id} fetchData={fetchData} />
-			<DisableProduct item={item._id} isActive={item.isActive} fetchData={fetchData} />
-			</td>
-			</tr> 
+				
+				{/* Action button here*/}
+				<td className="text-center">
+				<UpdateProduct item={item} fetchData={fetchData}/>
+				<DisableProduct item={item} isActive={item.isActive} fetchData={fetchData} />
+				</td>
+				</tr> 
 			)
 		})}
 		</tbody>
