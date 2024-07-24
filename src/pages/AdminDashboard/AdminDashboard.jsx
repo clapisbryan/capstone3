@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import Body from '../../components/Body/Body'
-import Action from './Actions/Action'
-import ProductCard from '../../components/ProductCard/ProductCard';
+import React, { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
+import Body from '../../components/Body/Body';
+import CustomTable from './CustomTable/CustomTable';
+import ProductCard from '../../components/ProductCard/ProductCard';
+import Action from './Actions/Action';
 
 const AdminDashboard = () => {
   const [result, setResult] = useState([]);
@@ -27,11 +28,12 @@ const AdminDashboard = () => {
         }
       })
   }
+
   return (
     <>
       <Body title={"Admin Dashboard"}>
         <Action fetchData={retrieveProducts} />
-        <Row className='mt-5'>
+        {/* <Row className='mt-5'>
           {result.map((product) => {
             return (
               <Col sm={12} md={4} lg={3} key={product._id}>
@@ -39,7 +41,8 @@ const AdminDashboard = () => {
               </Col>
             )
           })}
-        </Row>
+        </Row> */}
+        <CustomTable items={result} />
       </Body>
     </>
   )

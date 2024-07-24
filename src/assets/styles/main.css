@@ -14,3 +14,8 @@ body {
     background-size: cover;
     color: #ffffff;
 }
+
+th {
+    background-color: #373a3c!important;
+    color: #ffffff!important;
+}
