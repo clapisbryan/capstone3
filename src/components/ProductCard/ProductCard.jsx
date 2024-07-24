@@ -1,13 +1,16 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Card, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import UserContext from '../../hooks/UserContext';
 
-export default function ProductCard({product}) {
-    
-    console.log(product);
+export default function ProductCard({ product }) {
 
-    const { _id, name, description, price} = product
+    const { user } = useContext(UserContext);
+
+    console.log("user", user);
+
+    const { _id, name, description, price } = product
 
     return (
         <Card>
@@ -17,7 +20,14 @@ export default function ProductCard({product}) {
                 <Card.Text>{description}</Card.Text>
                 <Card.Subtitle>Price:</Card.Subtitle>
                 <Card.Text>{price}</Card.Text>
-                <Link className="btn btn-primary" to={`/courses/${_id}`}>Details</Link>
+                {user.isAdmin ?
+                    <>
+                        <Button variant='primary' size='md'>Update</Button>
+                    </>
+                    :
+                    <Link className="btn btn-primary" to={`/courses/${_id}`}>Details</Link>
+                }
+
             </Card.Body>
         </Card>
     )
@@ -25,7 +35,7 @@ export default function ProductCard({product}) {
 
 // Check if the CourseCard component is getting the correct prop types (data types of the properties)
 // PropTypes are used for validating information passed to a component and is a tool normally used to help developers ensure the correct information is passed from one component to the next
-CourseCard.propTypes = {
+ProductCard.propTypes = {
     // The "shape" method is used to check if a prop object conforms to a specific "shape"
     courseProp: PropTypes.shape({
         // Define the properties and their expected types
