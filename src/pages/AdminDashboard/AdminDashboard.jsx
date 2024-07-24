@@ -41,7 +41,7 @@ const AdminDashboard = () => {
               </Col>
             )
           })}
-        </Row> */}
+        </Row> */} 
         <CustomTable items={result} />
       </Body>
     </>

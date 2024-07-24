@@ -43,7 +43,7 @@ const CustomTable = ({ items }) => {
 										<Button variant='primary' className='mx-1' size='sm'>Update</Button>
 										<Button variant='danger' className='mx-1' size='sm'>Activate</Button>
 									</td>
-								</tr>
+								</tr> 
 							)
 						})}
 					</tbody>
