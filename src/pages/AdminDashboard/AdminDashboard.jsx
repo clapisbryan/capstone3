@@ -4,6 +4,7 @@ import Body from '../../components/Body/Body';
 import CustomTable from './CustomTable/CustomTable';
 import ProductCard from '../../components/ProductCard/ProductCard';
 import Action from './Actions/Action';
+import UpdateProduct from '../../components/AdminView/UpdateProduct';
 
 const AdminDashboard = () => {
   const [result, setResult] = useState([]);
@@ -42,7 +43,7 @@ const AdminDashboard = () => {
             )
           })}
         </Row> */} 
-        <CustomTable items={result} />
+        <CustomTable items={result} fetchData={retrieveProducts} />
       </Body>
     </>
   )
