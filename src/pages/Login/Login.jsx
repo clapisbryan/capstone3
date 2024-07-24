@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Swal from 'sweetalert2';
 import UserContext from '../../hooks/UserContext';
 import { Navigate } from 'react-router-dom';
+import Body from '../../components/Body/Body';
 
 const Login = () => {
 
@@ -94,37 +95,39 @@ const Login = () => {
         (user.id !== null && user.id !== undefined) ?
           <Navigate to="/" />
           :
-          <Row className='align-items-center justify-content-center vh-100'>
-            <Col sm={12} md={5}>
-              <Card>
-                <CardBody>
-                  <Form onSubmit={handleLogin}>
-                    <div className="mb-3">
-                      <h1 className='text-center'>LOGIN</h1>
-                    </div>
-                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                      <Form.Label>Email address</Form.Label>
-                      <Form.Control type="email" placeholder="Enter your email address" value={email} onChange={(e) => setEmail(e.target.value)} />
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                      <Form.Label>Password</Form.Label>
-                      <Form.Control type="password" placeholder="Enter your password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                    </Form.Group>
-                    <div className="text-center">
-                      {
-                        isActive ? <Button variant="primary" type="submit" size='md'>
-                          Login
-                        </Button> :
-                          <Button variant="secondary" type="submit" size='md' disabled>
+          <Body title={"Login"}>
+            <Row className='align-items-center justify-content-center'>
+              <Col sm={12} md={5}>
+                <Card>
+                  <CardBody>
+                    <Form onSubmit={handleLogin}>
+                      <div className="mb-3">
+                        <h1 className='text-center'>Ecommerce</h1>
+                      </div>
+                      <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                        <Form.Label>Email address</Form.Label>
+                        <Form.Control type="email" placeholder="Enter your email address" value={email} onChange={(e) => setEmail(e.target.value)} />
+                      </Form.Group>
+                      <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control type="password" placeholder="Enter your password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                      </Form.Group>
+                      <div className="text-center">
+                        {
+                          isActive ? <Button variant="primary" type="submit" size='md'>
                             Login
-                          </Button>
-                      }
-                    </div>
-                  </Form>
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
+                          </Button> :
+                            <Button variant="secondary" type="submit" size='md' disabled>
+                              Login
+                            </Button>
+                        }
+                      </div>
+                    </Form>
+                  </CardBody>
+                </Card>
+              </Col>
+            </Row>
+          </Body>
       }
     </>
   )

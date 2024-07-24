@@ -3,6 +3,7 @@ import ProductCard from '../../components/ProductCard';
 import UserContext from '../../hooks/UserContext';
 import { Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import Body from '../../components/Body/Body';
 
 export default function Products() {
 
@@ -36,26 +37,28 @@ export default function Products() {
 			{
 				user
 					?
-					products.length > 0
-						?
-						<>
-							<h1 className='text-center mt-5'>Our Products</h1>
-							<Row>
-								{
-									products.map(product => {
-										return (
-											<Col md={3} key={product._id}>
-												<ProductCard product={product} />
-											</Col>
-										)
-									})
-								}
-							</Row>
-						</>
-						:
-						<>
-							<h1>No Products</h1>
-						</>
+					<>
+						<Body title={"Our Products"}>
+							{
+								products.length > 0 ?
+									<Row>
+										{
+											products.map(product => {
+												return (
+													<Col md={3} key={product._id}>
+														<ProductCard product={product} />
+													</Col>
+												)
+											})
+										}
+									</Row>
+									:
+									<>
+										<h1>No Products</h1>
+									</>
+							}
+						</Body>
+					</>
 					:
 					<>
 						<h1>You are not logged in</h1>
