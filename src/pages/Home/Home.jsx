@@ -1,15 +1,11 @@
-import React from 'react'
-import Body from '../../components/Body/Body'
-
-
-const Home = () => {
-	return (
-		<div>
-			<Body title={"Home"}>
-				Home
-			</Body>
-		</div>
+import Body from '../../components/Body/Body';
+import AppNavbar from '../../components/AppNavbar/AppNavbar';
+export default function Home(){
+	return(
+		<>
+		<Body title="home">
+			{/*<h1>Home</h1>*/}
+		</Body>
+		</>
 	)
 }
-
-export default Home
