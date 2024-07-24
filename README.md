@@ -1,8 +1,34 @@
-# React + Vite
+# Application Name: Ecommerce
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### Team Members:
+- Bryan Clapis
+- Cindy Gaoat
 
-Currently, two official plugins are available:
+## User Credentials:
+#### Admin User:
+	- email: admin@email.com
+	- password: admin123
+#### Dummy Customer:
+	- email: customer@email.com
+	- password: customer123
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# Features
+## Features by Bryan Clapis
+### Setup
+- Vite React
+### Components
+- App Navbar
+- Body
+### Hooks
+- UserContext
+### Pages
+- Admin Dashboard
+  - Custom Table
+- Cart
+  - Custom Table
+  - Remove Product
+  - Clear Cart
+- Product
+  - Add to cart
+
+## Features by Cindy Gaoat

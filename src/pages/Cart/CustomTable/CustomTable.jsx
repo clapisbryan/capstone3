@@ -8,14 +8,12 @@ const CustomTable = ({ cart, fetchData }) => {
 	const [productDetails, setProductDetails] = useState({});
 	const [quantities, setQuantities] = useState({});
 	const [totalPrice, setTotalPrice] = useState(0);
+	const [subTotal, setSubTotal] = useState(0);
+	console.log("cart", cart);
 
-	useEffect(() => {
-		console.log("cart.totalPrice", cart.totalPrice);
-	}, [])
 	useEffect(() => {
 		fetchProductDetails();
 	}, [cart]);
-
 
 	const fetchProductDetails = async () => {
 		const productDetailsMap = {};
@@ -50,6 +48,40 @@ const CustomTable = ({ cart, fetchData }) => {
 		const newQuantities = { ...quantities, [productId]: newQuantity };
 		setQuantities(newQuantities);
 		calculateTotalPrice(newQuantities);
+		calculateSubTotal(newQuantities);
+
+		const requestBody = {
+			cartItems: [
+				{
+					productId: productId,
+					quantity: newQuantity,
+					subtotal: newQuantity * (productDetails[productId]?.price || 0)
+				}
+			],
+			totalPrice: calculateTotalPrice(newQuantities) 
+		};
+
+		fetch(`http://localhost:4006/b6/cart/update-cart-quantity`, {
+			method: "PATCH",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${localStorage.getItem('token')}`
+			},
+			body: JSON.stringify(requestBody)
+		})
+	};
+
+	const calculateSubTotal = (quantities) => {
+		let newSubTotal = 0;
+		cart.cartItems.forEach((item) => {
+			const productId = item.productId;
+			const product = productDetails[productId];
+			if (product && quantities[productId]) {
+				newSubTotal += product.price * quantities[productId];
+			}
+		});
+		setSubTotal(newSubTotal);
+		return newSubTotal; 
 	};
 
 	const calculateTotalPrice = (quantities) => {
@@ -62,6 +94,7 @@ const CustomTable = ({ cart, fetchData }) => {
 			}
 		});
 		setTotalPrice(newTotalPrice);
+		return newTotalPrice;
 	};
 
 	return (
@@ -73,6 +106,7 @@ const CustomTable = ({ cart, fetchData }) => {
 						<th>Description</th>
 						<th>Quantity</th>
 						<th>Price</th>
+						<th>Sub Total</th>
 						<th>Actions</th>
 					</tr>
 				</thead>
@@ -97,21 +131,22 @@ const CustomTable = ({ cart, fetchData }) => {
 									/>
 								</td>
 								<td>{productDetails[item.productId] ? productDetails[item.productId].price : 'Loading...'}</td>
+								<td>{totalPrice === 0 ? item.subtotal : subTotal}</td>
 								<td className='text-end'>
 									<RemoveProduct productId={item.productId} fetchData={fetchData} />
 								</td>
 							</tr>
 						))
 					)}
-					{cart.cartItems.length !== 0 &&
+					{cart.cartItems.length !== 0 && (
 						<tr>
 							<td colSpan={3} className="text-end fw-bold">
 								Total Price:
 							</td>
-							<td>{totalPrice === 0 ? `${cart.totalPrice}` : totalPrice}</td>
+							<td>{totalPrice === 0 ? cart.totalPrice : totalPrice}</td> {/* Display totalPrice here */}
 							<td className='text-end'><ClearCart fetchData={fetchData} /></td>
 						</tr>
-					}
+					)}
 				</tbody>
 			</Table >
 
