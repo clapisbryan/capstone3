@@ -1,9 +1,9 @@
-import { useEffect, useState, useContext } from 'react';
-import ProductCard from '../../components/ProductCard';
-import UserContext from '../../hooks/UserContext';
-import { Row, Col } from 'react-bootstrap';
+import { useContext, useEffect, useState } from 'react';
+import { Col, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Body from '../../components/Body/Body';
+import ProductCard from '../../components/ProductCard';
+import UserContext from '../../hooks/UserContext';
 
 export default function Products() {
 

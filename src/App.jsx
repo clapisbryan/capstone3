@@ -30,12 +30,10 @@ const App = () => {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data)
-        console.log(typeof data !== undefined)
         if (typeof data !== undefined) {
           setUser({
-            id: data._id,
-            isAdmin: data.isAdmin
+            id: data.user._id,
+            isAdmin: data.user.isAdmin
           });
         } else {
           setUser({
@@ -45,11 +43,6 @@ const App = () => {
         }
       })
   }, [])
-
-  useEffect(() => {
-    console.log(user);
-    console.log(localStorage);
-  }, [user]);
 
   return (
     <>
