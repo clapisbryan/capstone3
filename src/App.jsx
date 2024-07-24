@@ -6,6 +6,8 @@ import Home from './pages/Home/Home';
 import NoMatch from './pages/NoMatch/NoMatch';
 import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
+import Products from './pages/Products/Products';
+import ProductView from './pages/Products/ProductView'
 
 const App = () => {
 
@@ -19,7 +21,7 @@ const App = () => {
   };
 
   useEffect(() => {
-    fetch('http://localhost:4000/users/details', {
+    fetch('http://localhost:4006/b6/users/details', {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
@@ -51,12 +53,16 @@ const App = () => {
     <>
       <UserProvider value={{ user, setUser, unsetUser }}>
         <Router>
+          <Container>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/products" element={<Products />} />
+              <Route path="/products/:productId" element={<ProductView />} />
               <Route path="*" element={<NoMatch />} />
             </Routes>
+          </Container>
         </Router>
       </UserProvider>
     </>

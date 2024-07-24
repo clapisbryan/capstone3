@@ -15,7 +15,7 @@ const Login = () => {
 	const handleLogin = (e) => {
 		e.preventDefault();
 
-		fetch(`http://ec2-13-59-17-101.us-east-2.compute.amazonaws.com/b6/users/login`, {
+		fetch(`http://localhost:4006/b6/users/login`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json"
@@ -63,7 +63,7 @@ const Login = () => {
 	}
 
 	function retrieveUserDetails(token) {
-		fetch('http://localhost:4000/users/details', {
+		fetch('http://localhost:4006/b6/users/details', {
 			headers: {
 				Authorization: `Bearer ${token}`
 			}
