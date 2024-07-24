@@ -7,7 +7,6 @@ const RemoveProduct = ({ productId, fetchData }) => {
 	const [modalShow, setModalShow] = useState(false);
 
 	const handleOnProceed = () => {
-		console.log("productId", productId);
 		fetch(`http://localhost:4006/b6/cart/${productId}/remove-from-cart`, {
 			method: "PATCH",
 			headers: {

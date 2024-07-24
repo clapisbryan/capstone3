@@ -26,7 +26,6 @@ export default function ProductView() {
 		fetch(`http://localhost:4006/b6/products/${productId}`)
 			.then(res => res.json())
 			.then(data => {
-				console.log("ProductView", data.product);
 				// const { name, price, description } = data;
 				setName(data.product.name);
 				setPrice(data.product.price);

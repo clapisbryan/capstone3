@@ -19,13 +19,6 @@ export default function Register() {
 	// State to determine whether submit button is enable or not
 	const [isActive, setIsActive] = useState(false);
 
-	console.log(firstName);
-	console.log(lastName);
-	console.log(email);
-	console.log(mobileNo);
-	console.log(password);
-	console.log(confirmPassword);
-
 	useEffect(() => {
 		if ((firstName !== "" && lastName !== "" && email !== "" && mobileNo !== "" && password !== "" && confirmPassword !== "") && (password === confirmPassword) && (mobileNo.length === 11)) {
 
@@ -59,8 +52,6 @@ export default function Register() {
 		})
 			.then(res => res.json())
 			.then(data => {
-				console.log(data);
-
 				if (data.message === "Registered Successfully") {
 					setFirstName("");
 					setLastName("");

@@ -5,7 +5,6 @@ import UserContext from '../../../hooks/UserContext';
 const Action = ({ fetchData }) => {
 	
   const { user, setUser } = useContext(UserContext);
-console.log("add New Action", user);
 	return (
 		<div>
 			<div className="d-flex align-items-center justify-content-center">

@@ -29,10 +29,7 @@ const Login = () => {
     })
       .then(res => res.json())
       .then(data => {
-        console.log("Login Data", data.access);
         if (data.access !== undefined) {
-
-          console.log(data.access);
           retrieveUserDetails(data.access);
           localStorage.setItem('token', data.access);
           setEmail('');
@@ -72,7 +69,6 @@ const Login = () => {
     })
       .then(res => res.json())
       .then(data => {
-        console.log("retrieveUserDetails", data);
         setUser({
           id: data.user._id,
           isAdmin: data.user.isAdmin

@@ -20,7 +20,6 @@ const AdminDashboard = () => {
     })
       .then(res => res.json())
       .then(data => {
-        console.log("retrieveProducts", data.products);
         if (data.products) {
           setResult(data.products)
         } else {

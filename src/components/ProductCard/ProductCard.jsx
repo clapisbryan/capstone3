@@ -8,8 +8,6 @@ export default function ProductCard({ product }) {
 
     const { user } = useContext(UserContext);
 
-    console.log("user", user);
-
     const { _id, name, description, price } = product
 
     return (

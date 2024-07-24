@@ -18,7 +18,6 @@ const AddNewProduct = ({ fetchData }) => {
 
 	const handleCreateProduct = (e) => {
 		e.preventDefault();
-		console.log("localStorage.getItem('token')", localStorage.getItem('token'));
 		fetch('http://localhost:4006/b6/products/', {
 			method: "POST",
 			headers: {
@@ -34,7 +33,6 @@ const AddNewProduct = ({ fetchData }) => {
 		})
 			.then(res => res.json())
 			.then(data => {
-				console.log("Create Product", data);
 				if (data) {
 					Swal.fire({
 						title: "Product Created",

@@ -21,7 +21,6 @@ const Cart = () => {
 				'Authorization': `Bearer ${localStorage.getItem('token')}`
 			}
 		});
-		console.log("response", response);
 		if (response.ok) {
 			const cartData = await response.json();
 			setCart(cartData);
@@ -29,13 +28,12 @@ const Cart = () => {
 		} else {
 			setLoading(false);
 		}
-		console.log("cart", cart);
 	};
 	return (
 		<>
 			<Body title={"Cart View"}>
 				{loading && <p>Loading cart...</p>}
-				{!loading && cart && <CustomTable cart={cart} fetchData={fetchCartData}/>}
+				{!loading && cart && <CustomTable cart={cart} fetchData={fetchCartData} />}
 				{!loading && !cart && <p>Please try to login as user to view a cart items</p>}
 			</Body>
 		</>
