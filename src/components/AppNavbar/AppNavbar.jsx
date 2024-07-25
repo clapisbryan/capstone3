@@ -21,6 +21,7 @@ const AppNavbar = () => {
 							<Nav.Link as={NavLink} to="/products" exact="true">Products</Nav.Link>
 							{user.id ?
 								<>
+									<Nav.Link as={NavLink} to="/profile" exact="true">Profile</Nav.Link>
 									<Nav.Link as={NavLink} to="/cart-view" exact="true">Cart</Nav.Link>
 
 									{user.isAdmin &&

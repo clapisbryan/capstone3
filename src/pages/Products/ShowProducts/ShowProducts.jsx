@@ -27,8 +27,6 @@ const ShowProducts = () => {
 
     }, []);
 
-    console.log("products", products);
-
     return (
         <>
             {products.length === 0 && <h4 className='my-5'>No products yet</h4>}

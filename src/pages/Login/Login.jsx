@@ -3,11 +3,12 @@ import { Button, Card, CardBody, Col, Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import Swal from 'sweetalert2';
 import UserContext from '../../hooks/UserContext';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import Body from '../../components/Body/Body';
 
 const Login = () => {
 
+  const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
 
   const [email, setEmail] = useState('');
@@ -40,6 +41,7 @@ const Login = () => {
             icon: "success",
             text: "You are now logged in."
           });
+          navigate('/')
 
         } else if (data.message == "Incorrect email or password") {
 
