@@ -16,7 +16,7 @@ import OrderHistoryAdmin from './pages/Order/OrderHistoryAdmin';
 
 const App = () => {
 
-	const token = localStorage.getItem('token');
+  const token = localStorage.getItem('token');
 
   const [user, setUser] = useState({
     id: null,
@@ -47,7 +47,7 @@ const App = () => {
           });
         }
       })
-  }, [])
+  }, [token])
 
   return (
     <>
@@ -58,7 +58,7 @@ const App = () => {
 
             <Route path="/products" element={<Products />} />
             <Route path="/products/:productId" element={<ProductView />} />
-            {user.id || token?
+            {user.id ?
               <>
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/cart-view" element={<Cart />} />

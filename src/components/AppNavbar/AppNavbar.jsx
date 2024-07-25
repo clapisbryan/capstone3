@@ -8,7 +8,6 @@ import UserContext from '../../hooks/UserContext';
 
 const AppNavbar = () => {
 	const { user } = useContext(UserContext);
-	const token = localStorage.getItem('token');
 
 	return (
 		<>
@@ -20,7 +19,7 @@ const AppNavbar = () => {
 						<Nav className="">
 							<Nav.Link as={NavLink} to="/" exact="true">Home</Nav.Link>
 							<Nav.Link as={NavLink} to="/products" exact="true">Products</Nav.Link>
-							{user.id || token ?
+							{user.id ?
 								<>
 									<Nav.Link as={NavLink} to="/profile" exact="true">Profile</Nav.Link>
 									<Nav.Link as={NavLink} to="/cart-view" exact="true">Cart</Nav.Link>
