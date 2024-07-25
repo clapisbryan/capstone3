@@ -10,6 +10,7 @@ import NoMatch from './pages/NoMatch/NoMatch';
 import Products from './pages/Products/Products';
 import ProductView from './pages/Products/ProductView';
 import Register from './pages/Register/Register';
+import OrderHistory from './pages/Order/OrderHistory';
 
 const App = () => {
 
@@ -55,6 +56,7 @@ const App = () => {
               <Route path="/products" element={<Products />} />
               <Route path="/products/:productId" element={<ProductView />} />
               <Route path="/cart-view" element={<Cart />} />
+              <Route path="/orders" element={<OrderHistory />} />
               <Route path="/admin" element={<AdminDashboard />} />
               <Route path="/logout" element={<Logout />}/>
               <Route path="*" element={<NoMatch />} />
