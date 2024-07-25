@@ -11,6 +11,7 @@ import Products from './pages/Products/Products';
 import ProductView from './pages/Products/ProductView';
 import Register from './pages/Register/Register';
 import OrderHistory from './pages/Order/OrderHistory';
+import Profile from './pages/Profile/Profile';
 
 const App = () => {
 
@@ -49,18 +50,29 @@ const App = () => {
     <>
       <UserProvider value={{ user, setUser, unsetUser }}>
         <Router>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/products" element={<Products />} />
-              <Route path="/products/:productId" element={<ProductView />} />
-              <Route path="/cart-view" element={<Cart />} />
-              <Route path="/orders" element={<OrderHistory />} />
-              <Route path="/admin" element={<AdminDashboard />} />
-              <Route path="/logout" element={<Logout />}/>
-              <Route path="*" element={<NoMatch />} />
-            </Routes>
+          <Routes>
+            <Route path="/" element={<Home />} />
+
+            <Route path="/products" element={<Products />} />
+            <Route path="/products/:productId" element={<ProductView />} />
+            {user.id ?
+              <>
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/cart-view" element={<Cart />} />
+                <Route path="/orders" element={<OrderHistory />} />
+                {user.isAdmin &&
+                  <Route path="/admin" element={<AdminDashboard />} />
+                }
+                <Route path="/logout" element={<Logout />} />
+              </>
+              :
+              <>
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+              </>
+            }
+            <Route path="*" element={<NoMatch />} />
+          </Routes>
         </Router>
       </UserProvider>
     </>

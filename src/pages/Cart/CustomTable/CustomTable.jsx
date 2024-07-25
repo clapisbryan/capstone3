@@ -140,7 +140,7 @@ const CustomTable = ({ cart, fetchData }) => {
 					)}
 					{cart.cartItems.length !== 0 && (
 						<tr>
-							<td colSpan={3} className="text-end fw-bold">
+							<td colSpan={4} className="text-end fw-bold">
 								Total Price:
 							</td>
 							<td>{totalPrice === 0 ? cart.totalPrice : totalPrice}</td> {/* Display totalPrice here */}
