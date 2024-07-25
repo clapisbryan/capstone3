@@ -23,13 +23,20 @@
 - UserContext
 ### Pages
 - Admin Dashboard
-  - Custom Table
-- Cart
-  - Custom Table
-  - Remove Product
-  - Clear Cart
+  - Create Product
+  - Retrieve all products
+- Cart View
+  - Add to Cart
+  - Get all cart
+  - Update quantity
+  - Subtotal for each items
+  - Total price for all items
+  - Remove items from cart
+  - Clear all items from cart
 - Product
   - Add to cart
+- Profile
+  - Get User Details
 
 ## Features by Cindy Gaoat
 ### Components

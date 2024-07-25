@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Table } from 'react-bootstrap';
 import Swal from 'sweetalert2';
+import Body from '../../components/Body/Body';
 
 const OrderHistory = () => {
   const [orders, setOrders] = useState([]);
@@ -42,33 +43,34 @@ const OrderHistory = () => {
 
   return (
     <div>
-      <h2>Order History</h2>
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>Order ID</th>
-            <th>Product Name</th>
-            <th>Description</th>
-            <th>Price</th>
-          </tr>
-        </thead>
-        <tbody>
-          {orders.length === 0 ? (
+      <Body title={"Order History"}>
+        <Table striped bordered hover>
+          <thead>
             <tr>
-              <td colSpan="5" className="text-center">No orders found</td>
+              <th>Order ID</th>
+              <th>Product Name</th>
+              <th>Description</th>
+              <th>Price</th>
             </tr>
-          ) : (
-            orders.map((order) => (
-              <tr key={order._id}>
-                <td>{order._id}</td>
-                <td>{order.productsOrdered.map(product => product.name).join(', ')}</td>
-                <td>{order.productsOrdered.map(product => product.description).join(', ')}</td>
-                <td>{order.totalPrice}</td>
+          </thead>
+          <tbody>
+            {orders.length === 0 ? (
+              <tr>
+                <td colSpan="5" className="text-center">No orders found</td>
               </tr>
-            ))
-          )}
-        </tbody>
-      </Table>
+            ) : (
+              orders.map((order) => (
+                <tr key={order._id}>
+                  <td>{order._id}</td>
+                  <td>{order.productsOrdered.map(product => product.name).join(', ')}</td>
+                  <td>{order.productsOrdered.map(product => product.description).join(', ')}</td>
+                  <td>{order.totalPrice}</td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </Table>
+      </Body>
     </div>
   );
 };

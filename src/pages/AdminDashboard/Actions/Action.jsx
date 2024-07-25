@@ -7,7 +7,7 @@ const Action = ({ fetchData }) => {
   const { user, setUser } = useContext(UserContext);
 	return (
 		<div>
-			<div className="d-flex align-items-center justify-content-center">
+			<div className="d-flex align-items-center justify-content-end">
 				<AddNewProduct fetchData={fetchData} />
 			</div>
 		</div>

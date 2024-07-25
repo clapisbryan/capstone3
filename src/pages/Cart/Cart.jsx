@@ -5,10 +5,24 @@ import CustomTable from './CustomTable/CustomTable';
 const Cart = () => {
 	const [cart, setCart] = useState(null);
 	const [loading, setLoading] = useState(true);
+	const [isEmpty, setIsEmpty] = useState(false);
 
 	useEffect(() => {
-		// Fetch cart data from your API
-		fetchCartData();
+		fetch('http://localhost:4006/b6/products/active', {
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem('token')}`
+			}
+		})
+			.then(res => res.json())
+			.then(data => {
+
+				if (typeof data.message !== "string") {
+					fetchCartData();
+				} else {
+					setIsEmpty(true);
+				}
+
+			});
 	}, []);
 
 	const fetchCartData = async () => {
@@ -32,7 +46,7 @@ const Cart = () => {
 	return (
 		<>
 			<Body title={"Cart View"}>
-				{loading && <p>Loading cart...</p>}
+				{isEmpty && <p className='text-center my-5'>Nothing to display</p>}
 				{!loading && cart && <CustomTable cart={cart} fetchData={fetchCartData} />}
 				{!loading && !cart && <p>Please try to login as user to view a cart items</p>}
 			</Body>

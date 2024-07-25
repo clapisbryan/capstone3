@@ -32,7 +32,9 @@ const AdminDashboard = () => {
   return (
     <>
       <Body title={"Admin Dashboard"}>
-        <Action fetchData={retrieveProducts} />
+        <div className="my-3">
+          <Action fetchData={retrieveProducts} />
+        </div>
         {/* <Row className='mt-5'>
           {result.map((product) => {
             return (
@@ -41,7 +43,7 @@ const AdminDashboard = () => {
               </Col>
             )
           })}
-        </Row> */} 
+        </Row> */}
         <CustomTable items={result} fetchData={retrieveProducts} />
       </Body>
     </>

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -8,6 +8,7 @@ import UserContext from '../../hooks/UserContext';
 
 const AppNavbar = () => {
 	const { user } = useContext(UserContext);
+	const token = localStorage.getItem('token');
 
 	return (
 		<>
@@ -19,8 +20,9 @@ const AppNavbar = () => {
 						<Nav className="">
 							<Nav.Link as={NavLink} to="/" exact="true">Home</Nav.Link>
 							<Nav.Link as={NavLink} to="/products" exact="true">Products</Nav.Link>
-							{user.id ?
+							{user.id || token ?
 								<>
+									<Nav.Link as={NavLink} to="/profile" exact="true">Profile</Nav.Link>
 									<Nav.Link as={NavLink} to="/cart-view" exact="true">Cart</Nav.Link>
 
 									{user.isAdmin &&

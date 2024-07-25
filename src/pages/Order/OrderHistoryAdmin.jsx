@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Table } from 'react-bootstrap';
 import Swal from 'sweetalert2';
+import Body from '../../components/Body/Body';
 
 const OrderHistoryAdmin = () => {
   const [orders, setOrders] = useState([]);
@@ -42,45 +43,47 @@ const OrderHistoryAdmin = () => {
 
   return (
     <div>
-      <h2>All Orders</h2>
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>Order ID</th>
-            <th>User Email</th>
-            <th>Product Name(s)</th>
-            <th>Total Price</th>
-            <th>Quantity</th          </tr>
-        </thead>
-        <tbody>
-          {orders.length === 0 ? (
+      <Body title={"All Orders"}>
+        <Table striped bordered hover>
+          <thead>
             <tr>
-              <td colSpan="6" className="text-center">No orders found</td>
+              <th>Order ID</th>
+              <th>User Email</th>
+              <th>Product Name(s)</th>
+              <th>Total Price</th>
+              <th>Quantity</th>
             </tr>
-          ) : (
-            orders.map((order) => (
-              <tr key={order._id}>
-                <td>{order._id}</td>
-                <td>{order.userId.email}</td>
-                <td>
-                  {order.productsOrdered.map((product) => (
-                    <div key={product._id}>
-                      <p>{product.name}</p>
-                      <p>{product.description}</p>
-                    </div>
-                  ))}
-                </td>
-                <td>{order.totalPrice}</td>
-                <td>
-                  {order.productsOrdered.map((product) => (
-                    <p key={product._id}>{product.quantity}</p>
-                  ))}
-                </td>
+          </thead>
+          <tbody>
+            {orders.length === 0 ? (
+              <tr>
+                <td colSpan="6" className="text-center">No orders found</td>
               </tr>
-            ))
-          )}
-        </tbody>
-      </Table>
+            ) : (
+              orders.map((order) => (
+                <tr key={order._id}>
+                  <td>{order._id}</td>
+                  <td>{order.userId.email}</td>
+                  <td>
+                    {order.productsOrdered.map((product) => (
+                      <div key={product._id}>
+                        <p>{product.name}</p>
+                        <p>{product.description}</p>
+                      </div>
+                    ))}
+                  </td>
+                  <td>{order.totalPrice}</td>
+                  <td>
+                    {order.productsOrdered.map((product) => (
+                      <p key={product._id}>{product.quantity}</p>
+                    ))}
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </Table>
+      </Body>
     </div>
   );
 };
