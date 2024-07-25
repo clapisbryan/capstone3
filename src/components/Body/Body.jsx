@@ -9,7 +9,7 @@ const Body = ({ title, children }) => {
 				<div className="bg-title-container">
 					<div className="bg-overlay">
 						<div className="container">
-							<h3 className='fw-bold text-center text-capitalized'>{title}</h3>
+							<h1 className='fw-bold text-center text-capitalized'>{title}</h1>
 						</div>
 					</div>
 				</div>
