@@ -46,7 +46,7 @@ const DisableProduct = ({ item, isActive, fetchData }) => {
             size="sm" 
             onClick={handleToggle}
         >
-            {isActive ? 'Disable' : 'Enable'}
+            {isActive ? 'Disable' : 'Activate'}
         </Button>
     );
 };
