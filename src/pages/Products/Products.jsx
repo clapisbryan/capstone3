@@ -2,8 +2,8 @@ import { useContext, useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Body from '../../components/Body/Body';
-import ProductCard from '../../components/ProductCard';
 import UserContext from '../../hooks/UserContext';
+import ShowProducts from './ShowProducts/ShowProducts';
 
 export default function Products() {
 
@@ -41,20 +41,10 @@ export default function Products() {
 						<Body title={"Our Products"}>
 							{
 								products.length > 0 ?
-									<Row>
-										{
-											products.map(product => {
-												return (
-													<Col md={3} key={product._id}>
-														<ProductCard product={product} />
-													</Col>
-												)
-											})
-										}
-									</Row>
+									<ShowProducts />
 									:
 									<>
-										<h1>No Products</h1>
+										<h4 className='text-center'>Nothing to display</h4>
 									</>
 							}
 						</Body>
