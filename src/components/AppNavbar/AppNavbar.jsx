@@ -11,30 +11,34 @@ const AppNavbar = () => {
 
 	return (
 		<>
-			<Navbar expand="lg" className="bg-body-tertiary bg-dark">
+			<Navbar expand="lg" className={`${user.isAdmin ? "bg-primary" : "bg-body-tertiary"}`}>
 				<Container>
-					<Navbar.Brand href="#home">Ecommerce</Navbar.Brand>
-					<Navbar.Toggle aria-controls="basic-navbar-nav" />
+					<Navbar.Brand href="#home" className={`${user.isAdmin && "text-light"}`}>Ecommerce</Navbar.Brand>
+					<Navbar.Toggle aria-controls="basic-navbar-nav" className='bg-light' />
 					<Navbar.Collapse id="basic-navbar-nav" className='justify-content-end'>
 						<Nav className="">
-							<Nav.Link as={NavLink} to="/" exact="true">Home</Nav.Link>
-							<Nav.Link as={NavLink} to="/products" exact="true">Products</Nav.Link>
+							<Nav.Link as={NavLink} to="/" exact="true" className={`${user.isAdmin && "text-light"}`}>Home</Nav.Link>
+							<Nav.Link as={NavLink} to="/products" exact="true" className={`${user.isAdmin && "text-light"}`}>Products</Nav.Link>
 							{user.id ?
 								<>
-									<Nav.Link as={NavLink} to="/profile" exact="true">Profile</Nav.Link>
-									<Nav.Link as={NavLink} to="/cart-view" exact="true">Cart</Nav.Link>
+									<Nav.Link as={NavLink} to="/profile" exact="true" className={`${user.isAdmin && "text-light"}`}>Profile</Nav.Link>
 
-									{user.isAdmin &&
+									{user.isAdmin ?
 										<>
-											<Nav.Link as={NavLink} to="/admin" exact="true">Admin</Nav.Link>
+											<Nav.Link as={NavLink} to="/admin" exact="true" className={`${user.isAdmin && "text-light"}`}>Admin</Nav.Link>
+											<Nav.Link as={NavLink} to="/all-orders" exact="true" className={`${user.isAdmin && "text-light"}`}>Orders</Nav.Link>
+										</> :
+										<>
+											<Nav.Link as={NavLink} to="/cart-view" exact="true" className={`${user.isAdmin && "text-light"}`}>Cart</Nav.Link>
+											<Nav.Link as={NavLink} to="/orders" exact="true" className={`${user.isAdmin && "text-light"}`}>Orders</Nav.Link>
 										</>
 									}
-									<Nav.Link as={NavLink} to="/logout" exact="true">Logout</Nav.Link>
+									<Nav.Link as={NavLink} to="/logout" exact="true" className={`${user.isAdmin && "text-light"}`}>Logout</Nav.Link>
 								</>
 								:
 								<>
-									<Nav.Link as={NavLink} to="/register" exact="true">Register</Nav.Link>
-									<Nav.Link as={NavLink} to="/login" exact="true">Login</Nav.Link>
+									<Nav.Link as={NavLink} to="/register" exact="true" className={`${user.isAdmin && "text-light"}`}>Register</Nav.Link>
+									<Nav.Link as={NavLink} to="/login" exact="true" className={`${user.isAdmin && "text-light"}`}>Login</Nav.Link>
 								</>
 							}
 

@@ -24,12 +24,7 @@ const OrderHistory = () => {
         const data = await response.json();
         setOrders(data.orders);
       } else {
-        const errorData = await response.json();
-        Swal.fire({
-          icon: 'error',
-          title: 'Failed to Fetch Orders',
-          text: errorData.message || 'Something went wrong. Please try again later.'
-        });
+        setOrders([]);
       }
     } catch (error) {
       console.error('Error fetching orders:', error);
