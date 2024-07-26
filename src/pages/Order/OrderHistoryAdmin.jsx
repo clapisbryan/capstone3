@@ -41,6 +41,7 @@ const OrderHistoryAdmin = () => {
     }
   };
 
+
   return (
     <div>
       <Body title={"All Orders"}>
@@ -48,10 +49,9 @@ const OrderHistoryAdmin = () => {
           <thead>
             <tr>
               <th>Order ID</th>
-              <th>User Email</th>
-              <th>Product Name(s)</th>
-              <th>Total Price</th>
+              <th>Product ID</th>
               <th>Quantity</th>
+              <th>Total Price</th>
             </tr>
           </thead>
           <tbody>
@@ -63,21 +63,20 @@ const OrderHistoryAdmin = () => {
               orders.map((order) => (
                 <tr key={order._id}>
                   <td>{order._id}</td>
-                  <td>{order.userId.email}</td>
                   <td>
                     {order.productsOrdered.map((product) => (
                       <div key={product._id}>
-                        <p>{product.name}</p>
+                        <p>{product.productId}</p>
                         <p>{product.description}</p>
                       </div>
                     ))}
                   </td>
-                  <td>{order.totalPrice}</td>
                   <td>
                     {order.productsOrdered.map((product) => (
                       <p key={product._id}>{product.quantity}</p>
                     ))}
                   </td>
+                  <td>{order.totalPrice}</td>
                 </tr>
               ))
             )}
