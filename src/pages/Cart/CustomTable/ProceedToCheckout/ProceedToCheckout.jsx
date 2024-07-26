@@ -1,60 +1,75 @@
-import React, { useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 import { Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import UserContext from '../../../../hooks/UserContext';
 
-const ProceedToCheckout = ({ cartItems, totalPrice }) => {
-  const { user } = useContext(UserContext);
+const ProceedToCheckout = () => {
+  const navigate = useNavigate();
 
-  const createOrder = async () => {
-    try {
-      const response = await fetch('http://localhost:4006/b6/orders/checkout', {
+  const handleProceedToCheckout = async () => {
+    await fetch('http://localhost:4006/b6/cart/get-cart', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        // Include authorization token if needed
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    }).then(res => res.json())
+      .then(data => {
+        console.log("Get CArt", data);
+        createOrder(data)
+      })
+  }
+
+  const createOrder = async (data) => {
+    console.log("Creating order with data:", data);
+
+    await fetch('http://localhost:4006/b6/orders/checkout', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token')}`
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token')}`
         },
         body: JSON.stringify({
-          userId: user.id, 
-          productsOrdered: cartItems,
-          totalPrice: totalPrice
+            userId: data.userId,
+            productsOrdered: data.cartItems,
+            totalPrice: data.totalPrice
         })
-      });
+    }).then(res => res.json())
+      .then(data => {
+        console.log("Order response:", data);
+        if (data.message === "Order already exists") {
+            Swal.fire({
+                icon: 'success',
+                title: 'Order',
+                text: `Order already exists`
+            });
+            navigate("/orders");
+        } else {
+            Swal.fire({
+                icon: 'success',
+                title: 'Order Created Successfully!',
+                text: `Order ID: ${data.orderId}`
+            });
+            navigate("/orders");
+        }
+    }).catch(error => {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: error.message
+        });
+    });
+};
 
-      if (response.ok) {
-        const data = await response.json();
-        Swal.fire({
-          icon: 'success',
-          title: 'Order Created Successfully!',
-          text: `Order ID: ${data.orderId}`
-        });
-        navigate("/orders");
-      } else {
-        const errorData = await response.json();
-        Swal.fire({
-          icon: 'error',
-          title: 'Failed to Create Order',
-          text: errorData.message || 'Something went wrong. Please try again later.'
-        });
-      }
-    } catch (error) {
-      console.error('Error creating order:', error);
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Failed to create order. Please try again later.'
-      });
-    }
-  };
 
   return (
     <>
-    <div className="text-end">
-    <Button variant="dark" onClick={createOrder}>Proceed to Checkout</Button>
-    </div>
+      <div className="text-end">
+        <Button variant="dark" onClick={handleProceedToCheckout}>Proceed to Checkout</Button>
+      </div>
     </>
-    );
+  );
 };
 
 export default ProceedToCheckout;

@@ -58,7 +58,7 @@ const CustomTable = ({ cart, fetchData }) => {
 					subtotal: newQuantity * (productDetails[productId]?.price || 0)
 				}
 			],
-			totalPrice: calculateTotalPrice(newQuantities) 
+			totalPrice: calculateTotalPrice(newQuantities)
 		};
 
 		fetch(`http://localhost:4006/b6/cart/update-cart-quantity`, {
@@ -81,7 +81,7 @@ const CustomTable = ({ cart, fetchData }) => {
 			}
 		});
 		setSubTotal(newSubTotal);
-		return newSubTotal; 
+		return newSubTotal;
 	};
 
 	const calculateTotalPrice = (quantities) => {
@@ -151,7 +151,7 @@ const CustomTable = ({ cart, fetchData }) => {
 			</Table >
 
 			{cart.cartItems.length !== 0 &&
-				<ProceedToCheckout cartItems={cart.cartItems} totalPrice={cart.totalPrice}/>
+				<ProceedToCheckout />
 			}
 		</>
 	);
