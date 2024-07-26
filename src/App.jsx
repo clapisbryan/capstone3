@@ -40,6 +40,7 @@ const App = () => {
             id: data.user._id,
             isAdmin: data.user.isAdmin
           });
+          console.log("user: ", user)
         } else {
           setUser({
             id: null,

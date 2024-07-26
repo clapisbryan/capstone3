@@ -4,7 +4,8 @@ import Swal from 'sweetalert2';
 import Body from '../../components/Body/Body';
 
 const OrderHistory = () => {
-  const [orders, setOrders] = useState([]);
+  const [order, setOrder] = useState(null);
+  const [productDetails, setProductDetails] = useState({});
 
   useEffect(() => {
     fetchOrderHistory();
@@ -22,9 +23,16 @@ const OrderHistory = () => {
 
       if (response.ok) {
         const data = await response.json();
-        setOrders(data.orders);
+        if (data.orders && typeof data.orders === 'object' && !Array.isArray(data.orders)) {
+          setOrder(data.orders);
+          fetchProductDetails(data.orders.productsOrdered);
+        } else {
+          console.error('Unexpected data structure:', data);
+          setOrder(null);
+        }
       } else {
-        setOrders([]);
+        console.error('Error fetching orders:', response.statusText);
+        setOrder(null);
       }
     } catch (error) {
       console.error('Error fetching orders:', error);
@@ -33,6 +41,34 @@ const OrderHistory = () => {
         title: 'Error',
         text: 'Failed to fetch orders. Please try again later.'
       });
+    }
+  };
+
+  const fetchProductDetails = async (productsOrdered) => {
+    const productIds = productsOrdered.map(product => product.productId);
+    const uniqueProductIds = [...new Set(productIds)];
+
+    try {
+      const productDetailsMap = {};
+      for (const productId of uniqueProductIds) {
+        const response = await fetch(`http://localhost:4006/b6/products/${productId}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        });
+
+        if (response.ok) {
+          const productData = await response.json();
+          productDetailsMap[productId] = productData.product;
+        } else {
+          console.error(`Failed to fetch product details for productId ${productId}`);
+        }
+      }
+      setProductDetails(productDetailsMap);
+    } catch (error) {
+      console.error('Error fetching product details:', error);
     }
   };
 
@@ -45,23 +81,29 @@ const OrderHistory = () => {
               <th>Order ID</th>
               <th>Product Name</th>
               <th>Description</th>
-              <th>Price</th>
+              <th>Quantity</th>
+              <th>Subtotal</th>
+              <th>Total Price</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
-            {orders.length === 0 ? (
-              <tr>
-                <td colSpan="5" className="text-center">No orders found</td>
-              </tr>
-            ) : (
-              orders.map((order) => (
-                <tr key={order._id}>
+            {order ? (
+              order.productsOrdered.map((product) => (
+                <tr key={product._id}>
                   <td>{order._id}</td>
-                  <td>{order.productsOrdered.map(product => product.name).join(', ')}</td>
-                  <td>{order.productsOrdered.map(product => product.description).join(', ')}</td>
+                  <td>{productDetails[product.productId] ? productDetails[product.productId].name : 'Loading...'}</td>
+                  <td>{productDetails[product.productId] ? productDetails[product.productId].description : 'Loading...'}</td>
+                  <td>{product.quantity}</td>
+                  <td>{product.subtotal}</td>
                   <td>{order.totalPrice}</td>
+                  <td>{order.status}</td>
                 </tr>
               ))
+            ) : (
+              <tr>
+                <td colSpan="8" className="text-center">No orders found</td>
+              </tr>
             )}
           </tbody>
         </Table>

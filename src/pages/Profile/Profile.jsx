@@ -12,6 +12,7 @@ const Profile = () => {
 
 	useEffect(() => {
 		// Get user details here
+		
 	}, [])
 
 	const handleEdit = (e) => {
