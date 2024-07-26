@@ -151,7 +151,7 @@ const CustomTable = ({ cart, fetchData }) => {
 			</Table >
 
 			{cart.cartItems.length !== 0 &&
-				<ProceedToCheckout />
+				<ProceedToCheckout cartItems={cart.cartItems} totalPrice={cart.totalPrice}/>
 			}
 		</>
 	);
