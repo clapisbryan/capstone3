@@ -11,20 +11,7 @@ const Profile = () => {
 	const [isActive, setIsActive] = useState(true);
 
 	useEffect(() => {
-		fetch('http://localhost:4006/b6/users/details',
-			{
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Bearer ${localStorage.getItem('token')}`
-				}
-			})
-			.then(res => res.json())
-			.then(data => {
-				setFirstName(data.user.firstName);
-				setLastName(data.user.lastName);
-				setEmail(data.user.email);
-				setMobileNo(data.user.mobileNo);
-			})
+		// Get user details here
 	}, [])
 
 	const handleEdit = (e) => {
