@@ -18,10 +18,6 @@ export default function ProductView() {
 	const [description, setDescription] = useState("");
 	const [result, setResult] = useState([]);
 
-	// function addToCart(){
-
-	// }
-
 	useEffect(() => {
 		fetch(`http://localhost:4006/b6/products/${productId}`)
 			.then(res => res.json())
