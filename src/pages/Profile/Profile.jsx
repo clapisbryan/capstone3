@@ -1,9 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import Body from '../../components/Body/Body'
-import { Button, Col, Form, Row } from 'react-bootstrap'
+import { Container, Button, Col, Form, Row } from 'react-bootstrap'
 import ChangePassword from './ChangePassword/ChangePassword';
+import UserContext from '../../hooks/UserContext';
+import Swal from 'sweetalert2';
 
 const Profile = () => {
+	const { user } = useContext(UserContext);
+    const [details,setDetails] = useState({});
 	const [firstName, setFirstName] = useState('');
 	const [lastName, setLastName] = useState('');
 	const [email, setEmail] = useState('');
@@ -12,21 +16,82 @@ const Profile = () => {
 
 	useEffect(() => {
 		// Get user details here
-		
+		fetch(`http://localhost:4006/b6/users/details`, {
+            headers: {
+                Authorization: `Bearer ${ localStorage.getItem('token') }`
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data)
+            // Set the user states values with the user details upon successful login.
+            if (typeof data !== undefined) {
+
+                setDetails(data);
+
+            } else if (data.error === "User not found") {
+
+                Swal.fire({
+                    title: "User Not Found",
+                    icon: "error",
+                    text: "User not found, please check if you're logged in or contact the administrator."
+                })
+
+            } else {
+
+                Swal.fire({
+                    title: "Profile Error",
+                    icon: "error",
+                    text: "Something went wrong, kindly contact us for assistance."
+                })
+
+            }
+        });
 	}, [])
 
 	const handleEdit = (e) => {
 		e.preventDefault()
 		setIsActive(false);
 	}
-	const handleUpdateProfile = () => {
+	const handleUpdateProfile = (e) => {
+		e.preventDefault()
 		setIsActive(true);
+		fetch(`http://localhost:4006/b6/users/update-user`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify({ firstName, lastName, email, mobileNo })
+        })
+        .then(res => res.json())
+        .then(data => {
+            // setLoading(false);
+            console.log("data", data)
+            if (data.message === 'Successfully updated') {
+                Swal.fire('Success!', 'User Details updated successfully', 'success');
+            } else {
+                Swal.fire('Error!', 'Failed to update user details', 'error');
+            }
+        })
+        .catch(error => {
+        	console.log("error",error)
+            // setLoading(false);
+            Swal.fire('Error!', 'Network error. Please try again later.', 'error');
+            console.error('Error:', error);
+        });
 	}
 
 
 	return (
-		<>
+		<>	
 			<Body title={"Profile"}>
+				 <Container className="mt-3 p-3 text-blue">
+	                <h1 className="mb-3 fw-bold text-center text-capitalized">{`WELCOME, ${details.user.firstName}!`}</h1>
+                    <h4 className="text-center">Name: {details.user.firstName} {details.user.lastName}</h4>
+                    <h4 className="text-center">Email: {details.user.email}</h4>
+                    <h4 className="text-center">Mobile No: {details.user.mobileNo}</h4>
+	            </Container>
 				<div className="d-flex align-items-center justify-content-end" >
 					{isActive ?
 						<Button variant='primary' size='md' className='mx-1' onClick={handleEdit}>Edit</Button> :

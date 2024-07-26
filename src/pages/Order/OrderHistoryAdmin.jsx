@@ -5,6 +5,7 @@ import Body from '../../components/Body/Body';
 
 const OrderHistoryAdmin = () => {
   const [orders, setOrders] = useState([]);
+  const [productDetails, setProductDetails] = useState({});
 
   useEffect(() => {
     fetchAllOrders();
@@ -23,6 +24,7 @@ const OrderHistoryAdmin = () => {
       if (response.ok) {
         const data = await response.json();
         setOrders(data.orders);
+        fetchProductDetails(data.orders);
       } else {
         const errorData = await response.json();
         Swal.fire({
@@ -41,6 +43,34 @@ const OrderHistoryAdmin = () => {
     }
   };
 
+  const fetchProductDetails = async (orders) => {
+    const productIds = orders.flatMap(order => order.productsOrdered.map(product => product.productId));
+    const uniqueProductIds = [...new Set(productIds)];
+
+    try {
+      const productDetailsMap = {};
+      for (const productId of uniqueProductIds) {
+        const response = await fetch(`http://localhost:4006/b6/products/${productId}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        });
+
+        if (response.ok) {
+          const productData = await response.json();
+          productDetailsMap[productId] = productData.product;
+        } else {
+          console.error(`Failed to fetch product details for productId ${productId}`);
+        }
+      }
+      setProductDetails(productDetailsMap);
+    } catch (error) {
+      console.error('Error fetching product details:', error);
+    }
+  };
+
   return (
     <div>
       <Body title={"All Orders"}>
@@ -48,37 +78,32 @@ const OrderHistoryAdmin = () => {
           <thead>
             <tr>
               <th>Order ID</th>
-              <th>User Email</th>
+              <th>User ID</th>
               <th>Product Name(s)</th>
-              <th>Total Price</th>
+              <th>Product Description(s)</th>
               <th>Quantity</th>
+              <th>Total Price</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
             {orders.length === 0 ? (
               <tr>
-                <td colSpan="6" className="text-center">No orders found</td>
+                <td colSpan="8" className="text-center">No orders found</td>
               </tr>
             ) : (
               orders.map((order) => (
-                <tr key={order._id}>
-                  <td>{order._id}</td>
-                  <td>{order.userId.email}</td>
-                  <td>
-                    {order.productsOrdered.map((product) => (
-                      <div key={product._id}>
-                        <p>{product.name}</p>
-                        <p>{product.description}</p>
-                      </div>
-                    ))}
-                  </td>
-                  <td>{order.totalPrice}</td>
-                  <td>
-                    {order.productsOrdered.map((product) => (
-                      <p key={product._id}>{product.quantity}</p>
-                    ))}
-                  </td>
-                </tr>
+                order.productsOrdered.map((product) => (
+                  <tr key={product._id}>
+                    <td>{order._id}</td>
+                    <td>{order.userId}</td> {/* Adjusted for provided output */}
+                    <td>{productDetails[product.productId] ? productDetails[product.productId].name : 'Loading...'}</td>
+                    <td>{productDetails[product.productId] ? productDetails[product.productId].description : 'Loading...'}</td>
+                    <td>{product.quantity}</td>
+                    <td>{order.totalPrice}</td>
+                    <td>{order.status}</td>
+                  </tr>
+                ))
               ))
             )}
           </tbody>
