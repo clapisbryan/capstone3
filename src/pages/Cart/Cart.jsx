@@ -8,7 +8,7 @@ const Cart = () => {
 	const [isEmpty, setIsEmpty] = useState(false);
 
 	useEffect(() => {
-		fetch('http://localhost:4006/b6/products/active', {
+		fetch(`https://capstone2-8wse.onrender.com/b6/products/active`, {
 			headers: {
 				Authorization: `Bearer ${localStorage.getItem('token')}`
 			}
@@ -27,7 +27,7 @@ const Cart = () => {
 
 	const fetchCartData = async () => {
 
-		const response = await fetch('http://localhost:4006/b6/cart/get-cart', {
+		const response = await fetch(`https://capstone2-8wse.onrender.com/b6/cart/get-cart`, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',

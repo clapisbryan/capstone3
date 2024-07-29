@@ -7,7 +7,7 @@ const ProceedToCheckout = () => {
   const navigate = useNavigate();
 
   const handleProceedToCheckout = async () => {
-    await fetch('http://localhost:4006/b6/cart/get-cart', {
+    await fetch(`https://capstone2-8wse.onrender.com/b6/cart/get-cart`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -24,43 +24,43 @@ const ProceedToCheckout = () => {
   const createOrder = async (data) => {
     console.log("Creating order with data:", data);
 
-    await fetch('http://localhost:4006/b6/orders/checkout', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('token')}`
-        },
-        body: JSON.stringify({
-            userId: data.userId,
-            productsOrdered: data.cartItems,
-            totalPrice: data.totalPrice
-        })
+    await fetch(`https://capstone2-8wse.onrender.com/b6/orders/checkout`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify({
+        userId: data.userId,
+        productsOrdered: data.cartItems,
+        totalPrice: data.totalPrice
+      })
     }).then(res => res.json())
       .then(data => {
         console.log("Order response:", data);
         if (data.message === "Order already exists") {
-            Swal.fire({
-                icon: 'success',
-                title: 'Order',
-                text: `Order already exists`
-            });
-            navigate("/orders");
+          Swal.fire({
+            icon: 'success',
+            title: 'Order',
+            text: `Order already exists`
+          });
+          navigate("/orders");
         } else {
-            Swal.fire({
-                icon: 'success',
-                title: 'Order Created Successfully!',
-                text: `Order ID: ${data.orderId}`
-            });
-            navigate("/orders");
+          Swal.fire({
+            icon: 'success',
+            title: 'Order Created Successfully!',
+            text: `Order ID: ${data.orderId}`
+          });
+          navigate("/orders");
         }
-    }).catch(error => {
+      }).catch(error => {
         Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: error.message
+          icon: 'error',
+          title: 'Error',
+          text: error.message
         });
-    });
-};
+      });
+  };
 
 
   return (

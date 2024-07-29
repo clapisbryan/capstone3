@@ -21,7 +21,7 @@ const CustomTable = ({ cart, fetchData }) => {
 		for (const item of cart.cartItems) {
 			const productId = item.productId;
 			try {
-				const response = await fetch(`http://localhost:4006/b6/products/${productId}`, {
+				const response = await fetch(`https://capstone2-8wse.onrender.com/b6/products/${productId}`, {
 					method: 'GET',
 					headers: {
 						'Content-Type': 'application/json',
@@ -61,7 +61,7 @@ const CustomTable = ({ cart, fetchData }) => {
 			totalPrice: calculateTotalPrice(newQuantities)
 		};
 
-		fetch(`http://localhost:4006/b6/cart/update-cart-quantity`, {
+		fetch(`https://capstone2-8wse.onrender.com/b6/cart/update-cart-quantity`, {
 			method: "PATCH",
 			headers: {
 				"Content-Type": "application/json",

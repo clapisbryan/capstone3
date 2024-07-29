@@ -19,7 +19,7 @@ export default function ProductView() {
 	const [result, setResult] = useState([]);
 
 	useEffect(() => {
-		fetch(`http://localhost:4006/b6/products/${productId}`)
+		fetch(`https://capstone2-8wse.onrender.com/b6/products/${productId}`)
 			.then(res => res.json())
 			.then(data => {
 				// const { name, price, description } = data;

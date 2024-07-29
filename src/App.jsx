@@ -28,7 +28,7 @@ const App = () => {
   };
 
   useEffect(() => {
-    fetch('http://localhost:4006/b6/users/details', {
+    fetch(`https://capstone2-8wse.onrender.com/b6/users/details`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }

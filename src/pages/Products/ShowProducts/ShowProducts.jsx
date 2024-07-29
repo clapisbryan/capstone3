@@ -9,7 +9,7 @@ const ShowProducts = () => {
 
     useEffect(() => {
 
-        fetch('http://localhost:4006/b6/products/active', {
+        fetch(`https://capstone2-8wse.onrender.com/b6/products/active`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }

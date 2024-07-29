@@ -76,7 +76,7 @@ const ChangePassword = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:4006/b6/users/update-password', {
+      const response = await fetch(`https://capstone2-8wse.onrender.com/b6/users/update-password`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

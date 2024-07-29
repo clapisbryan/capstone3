@@ -21,7 +21,7 @@ const UpdateProduct = ({ item, fetchData }) => {
         e.preventDefault();
         setLoading(true);
 
-        fetch(`http://localhost:4006/b6/products/${item._id}/update`, {
+        fetch(`https://capstone2-8wse.onrender.com/b6/products/${item._id}/update`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
